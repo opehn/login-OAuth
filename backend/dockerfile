@@ -1,0 +1,14 @@
+FROM node:18
+WORKDIR /var/app
+
+RUN npm install -g pnpm
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --filter=prod
+
+COPY ./build/ ./build/
+
+ENV PORT=3031
+
+EXPOSE 3031
+ENTRYPOINT ["node", "." ]
